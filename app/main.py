@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from .database import engine
+from .models import Base
 
 from app.core.config import settings
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -9,7 +13,7 @@ app = FastAPI(
 
 @app.get("/")
 def root():
-    return {"message": "Secure Cloud App API,",
+    return {"message": "Secure Cloud App API with FastAPI + PostgreSQL,",
             "status": "running"
     
     }
